@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>Financial Dashboard</h1>
+            <div class="date-filter">
+                <input type="month" id="monthPicker">
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="overview-cards">
+                <div class="card total-balance">
+                    <h3>Total Balance</h3>
+                    <p class="amount">₹1,25,000</p>
+                    <p class="trend positive">+2.5% from last month</p>
+                </div>
+                <div class="card monthly-inflow">
+                    <h3>Monthly Inflow</h3>
+                    <p class="amount">₹1,00,000</p>
+                </div>
+                <div class="card monthly-outflow">
+                    <h3>Monthly Outflow</h3>
+                    <p class="amount">₹45,000</p>
+                </div>
+            </div>
+
+            <div class="cashflow-section">
+                <div class="section-header">
+                    <h2>Cashflow Overview</h2>
+                    <div class="filters">
+                        <select id="accountFilter">
+                            <option value="all">All Accounts</option>
+                            <option value="bank">Bank Accounts</option>
+                            <option value="credit">Credit Cards</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="cashflowChart"></canvas>
+                </div>
+            </div>
+
+            <div class="transactions-upcoming">
+                <div class="recent-transactions">
+                    <h2>Recent Transactions</h2>
+                    <div class="transactions-list" id="transactionsList">
+                        <!-- Transactions will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="upcoming-payments">
+                    <h2>Upcoming Payments</h2>
+                    <div class="upcoming-list" id="upcomingList">
+                        <!-- Upcoming payments will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

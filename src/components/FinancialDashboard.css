@@ -1,0 +1,161 @@
+.financial-dashboard {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-header .subtitle {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+/* Transactions Section */
+.transactions-section {
+  grid-column: 1 / -1;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.transactions-list {
+  margin-top: 1rem;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.transaction-info .date {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.transaction-info .description {
+  font-weight: 500;
+}
+
+.amount {
+  font-weight: 600;
+}
+
+.amount.credit {
+  color: #2ecc71;
+}
+
+.amount.debit {
+  color: #e74c3c;
+}
+
+/* Cashflow Section */
+.cashflow-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cashflow-summary {
+  margin-top: 1rem;
+}
+
+.net-balance {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.net-balance .amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2ecc71;
+}
+
+.outflow-categories .category {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Upcoming Payments Section */
+.upcoming-payments-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.payment-categories {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Recommendations Section */
+.recommendations-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recommendations-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.recommendation-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  border-left: 4px solid #3498db;
+}
+
+.recommendation-card h3 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.recommendation-card p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .payment-categories {
+    grid-template-columns: 1fr;
+  }
+} 
