@@ -196,6 +196,11 @@ const FinancialDashboard: React.FC = () => {
     alert(`Initiating payment of ${formatCurrency(payment.amount)} for ${payment.description}`);
   };
 
+  const handleRewardNotificationClick = () => {
+    setBottomTab(1); // Switch to transactions tab
+    setTransactionTab(0); // Ensure we're on the "All Transactions" sub-tab
+  };
+
   // Mock data for demonstration
   useEffect(() => {
     // Mock Transactions
@@ -265,7 +270,7 @@ const FinancialDashboard: React.FC = () => {
       },
       {
         id: '8',
-        date: new Date('2024-02-23'),
+        date: new Date('2024-02-24'),
         amount: 500,
         description: 'Uber Ride',
         category: 'Transportation',
@@ -274,7 +279,7 @@ const FinancialDashboard: React.FC = () => {
       },
       {
         id: '9',
-        date: new Date('2024-02-24'),
+        date: new Date('2024-02-23'),
         amount: 800,
         description: 'Zomato Order',
         category: 'Food',
@@ -446,7 +451,7 @@ const FinancialDashboard: React.FC = () => {
                     sx={{ mb: 1, opacity: 0.8 }}
                   >
                     Bank Balance
-          </Typography>
+                  </Typography>
                   <Typography 
                     variant="h4"
                     sx={{
@@ -456,9 +461,9 @@ const FinancialDashboard: React.FC = () => {
                     }}
                   >
                     {formatCurrency(bankBalance)}
-              </Typography>
-            </Card>
-          </Grid>
+                  </Typography>
+                </Card>
+              </Grid>
               <Grid item xs={12}>
                 <Card sx={{ 
                   p: 3, 
@@ -474,16 +479,65 @@ const FinancialDashboard: React.FC = () => {
                   </Typography>
                   <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
                     {formatCurrency(creditCards[0]?.outstandingAmount || 0)}
-              </Typography>
+                  </Typography>
                   <Typography 
                     variant="body2" 
                     sx={{ mt: 1, opacity: 0.8 }}
                   >
                     Available: {formatCurrency(creditCards[0]?.availableLimit || 0)}
-              </Typography>
-            </Card>
-          </Grid>
-        </Grid>
+                  </Typography>
+                </Card>
+              </Grid>
+            </Grid>
+
+            {/* Reward Notification Card */}
+            {rewards.some(r => !r.claimed) && (
+              <Card 
+                sx={{ 
+                  mt: 3,
+                  p: 3, 
+                  borderRadius: 3,
+                  background: 'white',
+                  color: '#6a1b9a',
+                  cursor: 'pointer',
+                  border: '2px solid #8e24aa',
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'scale(1.02)'
+                  }
+                }}
+                onClick={handleRewardNotificationClick}
+              >
+                <Box sx={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}>
+                  <Box>
+                    <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 'bold' }}>
+                      Your last transaction on Uber unlocked a reward
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      sx={{ 
+                        color: '#6a1b9a',
+                        borderColor: '#8e24aa',
+                        '&:hover': {
+                          borderColor: '#6a1b9a',
+                          backgroundColor: 'rgba(106, 27, 154, 0.1)'
+                        },
+                        textTransform: 'none',
+                        borderRadius: 2
+                      }}
+                    >
+                      Claim Now
+                    </Button>
+                  </Box>
+                  <CardGiftcardIcon sx={{ fontSize: 32, color: '#8e24aa' }} />
+                </Box>
+              </Card>
+            )}
 
             {/* Upcoming Payments Section */}
             <Box sx={{ mt: 3 }}>
