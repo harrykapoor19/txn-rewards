@@ -2,46 +2,35 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Card,
-  Container,
   Typography,
   Tabs,
   Tab,
   Grid,
-  Select,
-  MenuItem,
-  LinearProgress,
   List,
   ListItem,
   ListItemText,
   Chip,
   Avatar,
-  IconButton,
   TextField,
   Button,
-  ButtonGroup,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Slide,
-  Grow,
   BottomNavigation,
   BottomNavigationAction,
   ListItemIcon,
   Menu,
+  MenuItem,
+  AvatarGroup,
 } from '@mui/material';
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
   ResponsiveContainer,
   PieChart,
   Pie,
   Cell,
+  Tooltip,
 } from 'recharts';
 import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
@@ -98,6 +87,13 @@ interface Reward {
   claimed: boolean;
 }
 
+interface Friend {
+  id: string;
+  name: string;
+  photoUrl: string;
+  phone: string;
+}
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
@@ -122,6 +118,39 @@ const FinancialDashboard: React.FC = () => {
   const [bottomTab, setBottomTab] = useState(0);
   const [transactionTab, setTransactionTab] = useState(0);
   const [moreMenuAnchor, setMoreMenuAnchor] = useState<null | HTMLElement>(null);
+  const [showReferralDialog, setShowReferralDialog] = useState(false);
+  const [friends] = useState<Friend[]>([
+    {
+      id: '1',
+      name: 'Rahul Sharma',
+      photoUrl: 'https://i.pravatar.cc/150?img=11',
+      phone: '+91987654321'
+    },
+    {
+      id: '2',
+      name: 'Priya Patel',
+      photoUrl: 'https://i.pravatar.cc/150?img=44',
+      phone: '+91987654322'
+    },
+    {
+      id: '3',
+      name: 'Amit Kumar',
+      photoUrl: 'https://i.pravatar.cc/150?img=67',
+      phone: '+91987654323'
+    },
+    {
+      id: '4',
+      name: 'Neha Singh',
+      photoUrl: 'https://i.pravatar.cc/150?img=47',
+      phone: '+91987654324'
+    },
+    {
+      id: '5',
+      name: 'Raj Malhotra',
+      photoUrl: 'https://i.pravatar.cc/150?img=12',
+      phone: '+91987654325'
+    }
+  ]);
 
   const animationFrameRef = useRef<number>();
 
@@ -158,6 +187,14 @@ const FinancialDashboard: React.FC = () => {
       }
       // Mark reward as claimed after spin
       setCurrentReward(prev => prev ? { ...prev, claimed: true } : null);
+      
+      // Show referral dialog after Uber cashback is claimed
+      if (currentReward?.merchant === 'Uber') {
+        setTimeout(() => {
+          setIsRewardDialogOpen(false);
+          setShowReferralDialog(true);
+        }, 2000);
+      }
     }, 3000);
   };
 
@@ -199,6 +236,12 @@ const FinancialDashboard: React.FC = () => {
   const handleRewardNotificationClick = () => {
     setBottomTab(1); // Switch to transactions tab
     setTransactionTab(0); // Ensure we're on the "All Transactions" sub-tab
+  };
+
+  const handleInviteAll = () => {
+    // Here you would implement the actual invite functionality
+    alert('Invites sent to all friends!');
+    setShowReferralDialog(false);
   };
 
   // Mock data for demonstration
@@ -1020,7 +1063,109 @@ const FinancialDashboard: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      </Box>
+
+      {/* Referral Dialog */}
+      <Dialog
+        open={showReferralDialog}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => setShowReferralDialog(false)}
+        PaperProps={{
+          sx: {
+            borderRadius: 2,
+            minWidth: 320,
+            maxWidth: 400
+          }
+        }}
+      >
+        <DialogTitle sx={{ textAlign: 'center', pt: 3 }}>
+          Unlock More Rewards! 🎁
+        </DialogTitle>
+        <DialogContent>
+          <Box sx={{ textAlign: 'center', py: 2 }}>
+            <Typography variant="h6" sx={{ mb: 2, fontWeight: 'medium' }}>
+              Get Cashback on Every Transaction
+            </Typography>
+            <Typography color="text.secondary" sx={{ mb: 3 }}>
+              Invite friends to check their spends and both of you will earn cashback on every transaction for 1 month!
+            </Typography>
+            
+            {/* Friends List */}
+            <Box sx={{ mb: 3 }}>
+              <AvatarGroup 
+                max={5}
+                sx={{ 
+                  justifyContent: 'center',
+                  '.MuiAvatar-root': { width: 56, height: 56, border: 2 }
+                }}
+              >
+                {friends.map((friend) => (
+                  <Avatar
+                    key={friend.id}
+                    src={friend.photoUrl}
+                    alt={friend.name}
+                    sx={{ width: 56, height: 56 }}
+                  />
+                ))}
+              </AvatarGroup>
+            </Box>
+
+            <List sx={{ mb: 3 }}>
+              {friends.map((friend) => (
+                <ListItem
+                  key={friend.id}
+                  sx={{
+                    py: 1,
+                    px: 2,
+                    borderRadius: 2,
+                    mb: 1,
+                    bgcolor: 'background.paper',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                  }}
+                >
+                  <ListItemIcon>
+                    <Avatar src={friend.photoUrl} />
+                  </ListItemIcon>
+                  <ListItemText 
+                    primary={friend.name}
+                    secondary={friend.phone}
+                  />
+                </ListItem>
+              ))}
+            </List>
+
+            <Button
+              variant="contained"
+              color="secondary"
+              fullWidth
+              size="large"
+              onClick={handleInviteAll}
+              sx={{ 
+                borderRadius: 2,
+                py: 1.5,
+                textTransform: 'none',
+                fontSize: '1.1rem',
+                fontWeight: 'medium'
+              }}
+            >
+              Invite All Friends
+            </Button>
+          </Box>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
+          <Button 
+            onClick={() => setShowReferralDialog(false)}
+            color="primary"
+            sx={{ 
+              textTransform: 'none',
+              fontSize: '1rem'
+            }}
+          >
+            Maybe Later
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
 
